@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Nuevo comentario para: “{{ post.titulo }}”</h2>
+<form method="post" class="form">
+  <label>Texto
+    <textarea name="texto" rows="4" required></textarea>
+  </label>
+  <label>Autor
+    <select name="autor_id" required>
+      <option value="">Elegí un usuario</option>
+      {% for u in usuarios %}<option value="{{ u.id }}">{{ u.nombre_usuario }}</option>{% endfor %}
+    </select>
+  </label>
+  <button class="btn" type="submit">Comentar</button>
+</form>
+{% endblock %}

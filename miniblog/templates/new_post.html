@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Nuevo post</h2>
+<form method="post" class="form">
+  <label>Título
+    <input type="text" name="titulo" required>
+  </label>
+  <label>Contenido
+    <textarea name="contenido" rows="6" required></textarea>
+  </label>
+  <label>Autor
+    <select name="autor_id" required>
+      <option value="">Elegí un usuario</option>
+      {% for u in usuarios %}<option value="{{ u.id }}">{{ u.nombre_usuario }}</option>{% endfor %}
+    </select>
+  </label>
+  <fieldset>
+    <legend>Categorías</legend>
+    {% for c in categorias %}
+      <label class="check">
+        <input type="checkbox" name="categorias" value="{{ c.id }}"> {{ c.nombre }}
+      </label>
+    {% endfor %}
+  </fieldset>
+  <button class="btn" type="submit">Crear</button>
+</form>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="card">
+  <h2>{{ post.titulo }}</h2>
+  <p class="muted">por {{ post.autor.nombre_usuario }} — {{ post.creado_en.strftime('%Y-%m-%d %H:%M') }}</p>
+  <p>{{ post.contenido }}</p>
+  <p class="tags">
+    {% for c in post.categorias %}<span class="tag">{{ c.nombre }}</span>{% endfor %}
+  </p>
+  <div class="row">
+    <a class="btn" href="{{ url_for('main.edit_post', post_id=post.id) }}">Editar</a>
+    <form method="post" action="{{ url_for('main.delete_post', post_id=post.id) }}" onsubmit="return confirm('¿Eliminar post?');">
+      <button class="btn danger" type="submit">Eliminar</button>
+    </form>
+  </div>
+</article>
+
+<section>
+  <h3>Comentarios ({{ post.comentarios|length }})</h3>
+  {% if post.comentarios %}
+    <ul class="list">
+      {% for c in post.comentarios %}
+        <li>
+          <p>{{ c.texto }}</p>
+          <p class="muted">por {{ c.autor.nombre_usuario }} — {{ c.creado_en.strftime('%Y-%m-%d %H:%M') }}</p>
+          <form method="post" action="{{ url_for('main.delete_comment', comentario_id=c.id) }}" onsubmit="return confirm('¿Eliminar comentario?');">
+            <button class="btn danger small" type="submit">Eliminar</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No hay comentarios todavía.</p>
+  {% endif %}
+  <p><a class="btn" href="{{ url_for('main.new_comment', post_id=post.id) }}">Agregar comentario</a></p>
+</section>
+{% endblock %}

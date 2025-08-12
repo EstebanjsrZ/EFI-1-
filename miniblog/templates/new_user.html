@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Nuevo usuario</h2>
+<form method="post" class="form">
+  <label>Nombre de usuario
+    <input type="text" name="nombre_usuario" required minlength="3" maxlength="50">
+  </label>
+  <label>Correo
+    <input type="email" name="correo" required>
+  </label>
+  <label>Contraseña (simple para la EFI)
+    <input type="password" name="password" required minlength="4">
+  </label>
+  <button class="btn" type="submit">Crear usuario</button>
+</form>
+{% endblock %}

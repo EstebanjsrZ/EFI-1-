@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Nueva categoría</h2>
+<form method="post" class="form">
+  <label>Nombre
+    <input type="text" name="nombre" required minlength="2" maxlength="50">
+  </label>
+  <button class="btn" type="submit">Crear categoría</button>
+</form>
+{% endblock %}

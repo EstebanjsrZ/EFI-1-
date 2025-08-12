@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Miniblog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+</head>
+<body>
+  <header class="container">
+    <h1><a href="{{ url_for('main.index') }}">📝 Miniblog</a></h1>
+    <nav>
+      <a href="{{ url_for('main.new_post') }}">Nuevo Post</a>
+      <a href="{{ url_for('main.new_user') }}">Nuevo Usuario</a>
+      <a href="{{ url_for('main.new_category') }}">Nueva Categoría</a>
+    </nav>
+    <form class="search" method="get" action="{{ url_for('main.index') }}">
+      <input type="text" name="q" placeholder="Buscar..." value="{{ q|default('') }}">
+      <select name="cat">
+        <option value="">Todas las categorías</option>
+        {% for c in all_categories %}
+          <option value="{{ c.id }}" {{ 'selected' if cat|default('')|string == c.id|string else '' }}>{{ c.nombre }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Buscar</button>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flash">
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="container">
+    <small>EFI Miniblog — {{ all_categories|length }} categorías disponibles</small>
+  </footer>
+</body>
+</html>

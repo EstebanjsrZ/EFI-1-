@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Últimos posteos</h2>
+{% if posts %}
+  <ul class="cards">
+    {% for p in posts %}
+      <li class="card">
+        <h3><a href="{{ url_for('main.post_detail', post_id=p.id) }}">{{ p.titulo }}</a></h3>
+        <p class="muted">por {{ p.autor.nombre_usuario }} — {{ p.creado_en.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p>{{ p.contenido[:180] }}{% if p.contenido|length > 180 %}…{% endif %}</p>
+        <p class="tags">
+          {% for c in p.categorias %}<span class="tag">{{ c.nombre }}</span>{% endfor %}
+        </p>
+        <div class="row">
+          <a class="btn" href="{{ url_for('main.post_detail', post_id=p.id) }}">Ver</a>
+          <a class="btn" href="{{ url_for('main.edit_post', post_id=p.id) }}">Editar</a>
+          <form method="post" action="{{ url_for('main.delete_post', post_id=p.id) }}" onsubmit="return confirm('¿Eliminar post?');">
+            <button class="btn danger" type="submit">Eliminar</button>
+          </form>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No hay posteos todavía.</p>
+{% endif %}
+{% endblock %}
