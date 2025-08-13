@@ -8,14 +8,11 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Inicializar extensiones
     db.init_app(app)
     Migrate(app, db)
 
-    # Registrar rutas
     app.register_blueprint(main_bp)
 
-    # Context processor para tener categorías en los templates
     @app.context_processor
     def inject_categories():
         from models import Categoria
