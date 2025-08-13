@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-# Tabla intermedia Post <-> Categoria (muchos a muchos)
 post_categorias = db.Table(
     "post_categorias",
     db.Column("post_id", db.Integer, db.ForeignKey("posts.id"), primary_key=True),
