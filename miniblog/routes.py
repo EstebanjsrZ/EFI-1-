@@ -17,7 +17,6 @@ def index():
     categorias = Categoria.query.order_by(Categoria.nombre.asc()).all()
     return render_template("index.html", posts=posts, categorias=categorias, q=q, cat=cat)
 
-# ------- Usuarios -------
 @bp.route("/usuarios/nuevo", methods=["GET", "POST"])
 def new_user():
     if request.method == "POST":
@@ -37,7 +36,6 @@ def new_user():
         return redirect(url_for("main.index"))
     return render_template("new_user.html")
 
-# ------- Categorías -------
 @bp.route("/categorias/nueva", methods=["GET", "POST"])
 def new_category():
     if request.method == "POST":
@@ -54,7 +52,6 @@ def new_category():
         return redirect(url_for("main.index"))
     return render_template("new_category.html")
 
-# ------- Posts -------
 @bp.route("/posts/nuevo", methods=["GET", "POST"])
 def new_post():
     usuarios = Usuario.query.order_by(Usuario.nombre_usuario.asc()).all()
@@ -105,7 +102,6 @@ def delete_post(post_id):
     flash("Post eliminado.", "success")
     return redirect(url_for("main.index"))
 
-# ------- Comentarios -------
 @bp.route("/posts/<int:post_id>/comentarios/nuevo", methods=["GET", "POST"])
 def new_comment(post_id):
     post = Post.query.get_or_404(post_id)
